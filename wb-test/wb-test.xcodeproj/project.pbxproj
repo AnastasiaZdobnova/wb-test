@@ -12,6 +12,7 @@
 		544224512AC17BEE00FA6FE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 544224502AC17BEE00FA6FE3 /* Assets.xcassets */; };
 		544224542AC17BEE00FA6FE3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 544224532AC17BEE00FA6FE3 /* Preview Assets.xcassets */; };
 		5442245B2AC187E200FA6FE3 /* FlightData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5442245A2AC187E200FA6FE3 /* FlightData.swift */; };
+		5456759D2AC1DBB900722A0E /* FlightDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5456759C2AC1DBB900722A0E /* FlightDataFetcher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		544224502AC17BEE00FA6FE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		544224532AC17BEE00FA6FE3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5442245A2AC187E200FA6FE3 /* FlightData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightData.swift; sourceTree = "<group>"; };
+		5456759C2AC1DBB900722A0E /* FlightDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightDataFetcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 				5442245A2AC187E200FA6FE3 /* FlightData.swift */,
 				5442244C2AC17BEC00FA6FE3 /* wb_testApp.swift */,
 				5442244E2AC17BEC00FA6FE3 /* ContentView.swift */,
+				5456759C2AC1DBB900722A0E /* FlightDataFetcher.swift */,
 				544224502AC17BEE00FA6FE3 /* Assets.xcassets */,
 				544224522AC17BEE00FA6FE3 /* Preview Content */,
 			);
@@ -143,6 +146,7 @@
 				5442244F2AC17BEC00FA6FE3 /* ContentView.swift in Sources */,
 				5442245B2AC187E200FA6FE3 /* FlightData.swift in Sources */,
 				5442244D2AC17BEC00FA6FE3 /* wb_testApp.swift in Sources */,
+				5456759D2AC1DBB900722A0E /* FlightDataFetcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
