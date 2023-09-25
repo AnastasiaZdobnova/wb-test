@@ -23,6 +23,7 @@ struct Flight: Codable {
     let startCity: String
     let startDate: String
     let startLocationCode: String
+    //var isLiked = false
 }
 
 struct FlightResponse: Codable {

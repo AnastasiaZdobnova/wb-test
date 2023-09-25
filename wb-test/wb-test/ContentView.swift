@@ -1,12 +1,14 @@
+
 import SwiftUI
 
 struct ContentView: View {
     
     struct FlightDetail: View {
         let flight: Flight
+        @Binding var likedFlights: [String: Bool] // Добавляем привязку к словарю лайков
         
         var body: some View {
-            VStack{
+            VStack {
                 HStack {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Детали перелета")
@@ -29,11 +31,12 @@ struct ContentView: View {
                     }
                     Button(action: {
                         // Обработчик нажатия на кнопку (вы можете добавить свою логику здесь)
+                        likedFlights[flight.searchToken]?.toggle() // Изменяем статус "лайка"
                     }) {
-                        Image(systemName: "heart")
-                            .foregroundColor(Color.gray) // Устанавливаем цвет сердечка
+                        Image(systemName: likedFlights[flight.searchToken] ?? false ? "heart.fill" : "heart")
+                            .foregroundColor(likedFlights[flight.searchToken] ?? false ? .red : .gray) // Устанавливаем цвет кнопки
                             .padding(.trailing, 8)
-                            .padding(.leading, 8)
+                            .padding(.leading, 6)
                     }
                 }
             }
@@ -44,7 +47,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List(flights, id: \.searchToken) { flight in
-                NavigationLink(destination: FlightDetail(flight: flight)) {
+                NavigationLink(destination: FlightDetail(flight: flight, likedFlights: $likedFlights)) {
                     HStack {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("\(flight.startCity) - \(flight.endCity)")
@@ -56,26 +59,30 @@ struct ContentView: View {
                                 .font(.headline)
                         }
                         Spacer()
-                        Button(action: {
-                            // Обработчик нажатия на кнопку (вы можете добавить свою логику здесь)
-                        }) {
-                            Image(systemName: "heart")
-                                .foregroundColor(Color.gray) // Устанавливаем цвет сердечка
-                                .padding(.trailing, 8)
-                                .padding(.leading, 6)
-                        }
+                        Image(systemName: likedFlights[flight.searchToken] ?? false ? "heart.fill" : "heart")
+                            .foregroundColor(likedFlights[flight.searchToken] ?? false ? .red : .gray) // Устанавливаем цвет кнопки
+                            .padding(.trailing, 8)
+                            .padding(.leading, 6)
+                            .onTapGesture {
+                                // Обработчик нажатия на кнопку "лайк"
+                                likedFlights[flight.searchToken]?.toggle() // Изменяем статус "лайка"
+                            }
                     }
                 }
             }
+            
             .listRowInsets(EdgeInsets())
             .onAppear {
-                fetchData()
+                if flights.isEmpty {
+                    fetchData()
+                }
             }
             .navigationTitle("Пора в путешествие")
         }
     }
     
     @State private var flights: [Flight] = [] // Свойство для хранения данных о рейсах
+    @State private var likedFlights: [String: Bool] = [:] // Словарь для хранения состояния лайков
     
     func fetchData() {
         if let url = URL(string: "https://vmeste.wildberries.ru/stream/api/avia-service/v1/suggests/getCheap") {
@@ -102,9 +109,13 @@ struct ContentView: View {
                         let flightResponse = try decoder.decode(FlightResponse.self, from: data)
                         DispatchQueue.main.async {
                             self.flights = flightResponse.flights // Сохраняем данные о рейсах
-                            print("Полученные рейсы: \(self.flights)")
+                            print("Получены рейсы")
+                            
+                            // Инициализируем словарь лайков по умолчанию
+                            for flight in self.flights {
+                                self.likedFlights[flight.searchToken] = false
+                            }
                         }
-                        // Теперь у вас есть массив данных о рейсах в свойстве flights
                     } catch {
                         print("Ошибка при декодировании JSON: \(error)")
                     }
@@ -113,3 +124,4 @@ struct ContentView: View {
         }
     }
 }
+
