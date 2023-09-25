@@ -2,17 +2,77 @@ import SwiftUI
 
 struct ContentView: View {
     
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-                .onAppear {
-                    fetchData()
+    struct FlightDetail: View {
+        let flight: Flight
+        
+        var body: some View {
+            VStack{
+                HStack {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Детали перелета")
+                            .font(.title)
+                        Text("Отправление:")
+                            .font(.headline)
+                            .foregroundColor(Color.gray)
+                        Text("\(flight.startCity) \(flight.startDate.prefix(10).description) ")
+                            .font(.title3)
+                        Text("Прибытие: ")
+                            .font(.headline)
+                            .foregroundColor(Color.gray)
+                        Text("\(flight.endCity) \(flight.endDate.prefix(10).description)")
+                            .font(.title3)
+                        Text("Стоимость: ")
+                            .font(.headline)
+                            .foregroundColor(Color.gray)
+                        Text("\(flight.price) ₽")
+                            .font(.title3)
+                    }
+                    Button(action: {
+                        // Обработчик нажатия на кнопку (вы можете добавить свою логику здесь)
+                    }) {
+                        Image(systemName: "heart")
+                            .foregroundColor(Color.gray) // Устанавливаем цвет сердечка
+                            .padding(.trailing, 8)
+                            .padding(.leading, 8)
+                    }
                 }
+            }
+            Spacer()
         }
-        .padding()
+    }
+    
+    var body: some View {
+        NavigationView {
+            List(flights, id: \.searchToken) { flight in
+                NavigationLink(destination: FlightDetail(flight: flight)) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("\(flight.startCity) - \(flight.endCity)")
+                                .font(.headline)
+                            Text("\(flight.startDate.prefix(10).description) - \(flight.endDate.prefix(10).description)")
+                                .font(.subheadline)
+                                .foregroundColor(Color.gray)
+                            Text("\(flight.price) ₽")
+                                .font(.headline)
+                        }
+                        Spacer()
+                        Button(action: {
+                            // Обработчик нажатия на кнопку (вы можете добавить свою логику здесь)
+                        }) {
+                            Image(systemName: "heart")
+                                .foregroundColor(Color.gray) // Устанавливаем цвет сердечка
+                                .padding(.trailing, 8)
+                                .padding(.leading, 6)
+                        }
+                    }
+                }
+            }
+            .listRowInsets(EdgeInsets())
+            .onAppear {
+                fetchData()
+            }
+            .navigationTitle("Пора в путешествие")
+        }
     }
     
     @State private var flights: [Flight] = [] // Свойство для хранения данных о рейсах
